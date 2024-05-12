@@ -5,11 +5,12 @@ const ytdl = require("ytdl-core");
 
 const player = createAudioPlayer({
 	behaviors: {
+		maxMissedFrames: Infinity, // Maybe this fixes the disconnecting issue
 		noSubscriber: NoSubscriberBehavior.Pause,
 	}
 });
 
-player.on("error", console.error); // TODO: fix that this crashes on the smallest connection problem. automatically reconnect, might be a problem that it's not using ffmpeg
+player.on("error", console.error);
 
 class PlayCommand {
 	static name = "play";
