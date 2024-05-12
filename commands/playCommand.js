@@ -9,7 +9,7 @@ const player = createAudioPlayer({
 	}
 });
 
-player.on("error", console.error);
+player.on("error", console.error); // TODO: fix that this crashes on the smallest connection problem. automatically reconnect, might be a problem that it's not using ffmpeg
 
 class PlayCommand {
 	static name = "play";
@@ -29,8 +29,10 @@ class PlayCommand {
 	}
 
 	async execute(interaction) {
-		if (interaction.member.voice.channelId === undefined)
+		if (interaction.member.voice.channelId === null) {
 			interaction.reply("You must join a voice channel first");
+			return;
+		}
 
 		const arg = interaction.options.getString("url_or_search");
 		const link = arg.startsWith("https://") ? arg : await this.#yt.lookup(arg);
