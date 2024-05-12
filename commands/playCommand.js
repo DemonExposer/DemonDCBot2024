@@ -9,6 +9,8 @@ const player = createAudioPlayer({
 	}
 });
 
+player.on("error", console.error);
+
 class PlayCommand {
 	static name = "play";
 	
